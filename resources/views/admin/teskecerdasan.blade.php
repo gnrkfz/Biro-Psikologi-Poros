@@ -154,7 +154,6 @@
                             <a href="{{ route('detailsoalteskecerdasan', ['id' => $soal->id]) }}" class="cursor-pointer text-blue-700 hover:text-blue-800 block">Detail</a>
                             <form action="{{ route('deletesoalkecerdasan', ['id' => $soal->id]) }}" method="POST" class="flex justify-center mt-1">
                                 @csrf
-                                @method('DELETE')
                                 <button type="submit" class="cursor-pointer text-red-700 hover:text-red-800 block">Delete</button>
                             </form>
                         </th>

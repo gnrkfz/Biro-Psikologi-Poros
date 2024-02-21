@@ -186,16 +186,9 @@ class AdminController extends Controller
     {
         $soal = TesKecerdasan::find($id);
         $idtest = $soal->idtest;
-        try {
-            $soal = TesKecerdasan::findOrFail($id);
-            if ($soal->gambarsoal) {
-                Storage::disk('public')->delete($soal->gambarsoal);
-            }
-            $soal->delete();
-            return redirect()->route('teskecerdasan', ['id' => $idtest]);
-        } catch (\Exception $e) {
-            return redirect()->route('teskecerdasan', ['id' => $idtest]);
-        }
+        $soal->idtest = 999999;
+        $soal->save();
+        return redirect()->route('teskecerdasan', ['id' => $idtest]);
     }
 
     public function teskecermatan($id)
@@ -362,14 +355,17 @@ class AdminController extends Controller
             $jawabanteskecermatan = JawabanTesKecermatan::where('idformtes', $formtes->id)->get();
             $nilaiteskecermatan = JawabanTesKecermatan::where('idformtes', $formtes->id)
             ->whereIn('sesi', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
-            ->pluck('benar');
-            $chartData = [];
-            foreach ($nilaiteskecermatan as $benar) {
-                $chartData[] = $benar;
+            ->get(['benar', 'salah']);
+            $dataBenar = [];
+            $dataTerjawab = [];
+            foreach ($nilaiteskecermatan as $jawaban) {
+                $dataBenar[] = $jawaban->benar;
+                $dataTerjawab[] = $jawaban->benar + $jawaban->salah;
             }
             $chart = (new LarapexChart)->lineChart()
-                ->addData('Benar', $chartData)
-                ->setColors(['#000000'])
+                ->addData('Benar', $dataBenar)
+                ->addData('Soal Terjawab', $dataTerjawab)
+                ->setColors(['#00FF00', '#000000'])
                 ->setXAxis(['Sesi 1', 'Sesi 2', 'Sesi 3', 'Sesi 4', 'Sesi 5', 'Sesi 6', 'Sesi 7', 'Sesi 8', 'Sesi 9', 'Sesi 10']);
             return view('admin.detailriwayattes', compact('formtes', 'klien', 'jawabanteskecermatan', 'chart'));
         }

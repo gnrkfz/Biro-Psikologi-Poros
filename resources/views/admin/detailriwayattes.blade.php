@@ -282,15 +282,24 @@
                     <div class="h-fit mr-10">
                     @php
                         $totalNilai = 0;
+                        $totalTerjawab = 0;
                     @endphp
                     @foreach ($jawabanteskecermatan as $jawaban)
-                        <h2 class="font-normal text-md mb-2.5">: {{ $jawaban->benar }}</h2>
                         @php
                             $totalNilai += $jawaban->benar;
+                            $totalTerjawab += $jawaban->benar;
+                            $totalTerjawab += $jawaban->salah;
+                            $totalTerjawabPerSesi = 0;
+                            $totalTerjawabPerSesi += $jawaban->benar;
+                            $totalTerjawabPerSesi += $jawaban->salah;
                         @endphp
+                        <h2 class="font-normal text-md mb-2.5">: {{ $jawaban->benar }} / {{ $totalTerjawabPerSesi }}</h2>
                     @endforeach
                     </div>
+                    <div>
                     <h2 class="ml-20 font-medium text-md mb-2.5">Total Nilai : {{ $totalNilai }}</h2>
+                    <h2 class="ml-20 font-medium text-md mb-2.5">Total Terjawab : {{ $totalTerjawab }}</h2>
+                    </div>
                 </div>
             </div>
             <a href="{{ route('cetaknilaiteskecermatan', ['id' => $formtes->id]) }}" target="_blank" class="py-2 px-3 ml-2.5 bg-blue-700 hover:bg-blue-800 transition duration-100 ease-in-out text-white rounded">Cetak Nilai Klien</a>

@@ -89,6 +89,7 @@
                         const nomor = document.getElementById('nomor-' + index);
                         if (radio && nomor) {
                             radio.checked = true;
+                            nomor.classList.remove('bg-gray-200');
                             nomor.classList.add('bg-blue-400');
                         }
                     }
@@ -127,12 +128,13 @@
                 var nomor = document.getElementById(nomorId);
                 if (radio && nomor) {
                     radio.checked = !radio.checked;
-                    nomor.classList.toggle('bg-blue-400', radio.checked);
                     if (radio.checked) {
                         localStorage.setItem('jawaban-' + nomorId.split('-')[1], radioId);
                     } else {
                         localStorage.removeItem('jawaban-' + nomorId.split('-')[1]);
                     }
+                    nomor.classList.toggle('bg-gray-200');
+                    nomor.classList.toggle('bg-blue-400', radio.checked);
                 }
             }
             function clearOption(index) {
@@ -143,6 +145,7 @@
                 var nomor = document.getElementById('nomor-' + index);
                 if (nomor) {
                     nomor.classList.remove('bg-blue-400');
+                    nomor.classList.add('bg-gray-200');
                 }
                 localStorage.removeItem('jawaban-' + index);
             }

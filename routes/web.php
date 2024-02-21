@@ -54,7 +54,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
     Route::post('teskecerdasan/{id}', [AdminController::class, 'tambahsoalteskecerdasan'])->name('tambahsoalteskecerdasan');
     Route::get('teskecerdasan/edit/{id}', [AdminController::class, 'detailsoalteskecerdasan'])->name('detailsoalteskecerdasan');
     Route::post('teskecerdasan/edit/{id}', [AdminController::class, 'editsoalteskecerdasan'])->name('editsoalteskecerdasan');
-    Route::delete('teskecerdasan/delete/{id}', [AdminController::class, 'deletesoalkecerdasan'])->name('deletesoalkecerdasan');
+    Route::post('teskecerdasan/delete/{id}', [AdminController::class, 'deletesoalkecerdasan'])->name('deletesoalkecerdasan');
     Route::get('teskecermatan/{id}', [AdminController::class, 'teskecermatan'])->name('teskecermatan');
     Route::post('teskecermatan/{id}', [AdminController::class, 'tambahsoalteskecermatan'])->name('tambahsoalteskecermatan');
     Route::delete('teskecermatan/delete/{id}', [AdminController::class, 'deletesoalkecermatan'])->name('deletesoalkecermatan');
