@@ -9,35 +9,33 @@
     </head>
     <body class="bg-gray-100">
     <div id="timer" class="py-2.5 px-3 text-black font-semibold border-black border-2 z-50 rounded fixed right-5 top-5"></div>
-        <div class="bg-white mt-5 mb-10 mx-10 px-20 py-10 shadow-lg rounded-lg">
-            <!-- Header -->
-            <!-- Bagian Soal Utama -->
-            <div class="mx-auto flex flex-col items-center justify-center w-full bg-white fixed left-1/2 transform -translate-x-1/2 h-auto py-5 top-0 border-b border-black" id="soal-utama">
-                <img src="/img/logoporos.png" alt="logoporos" class="mx-auto max-w-full h-auto">
-                <h1 class="text-2xl font-bold text-center">Sesi : {{ $jawabanteskecermatan->sesi }} / 10</h1>
-                <table class="text-sm w-1/3 justify-center h-full">
-                    <thead>
-                        <tr>
-                            <th class="text-lg font-medium py-2 px-4 border-2 border-gray-400">A</th>
-                            <th class="text-lg font-medium py-2 px-4 border-2 border-gray-400">B</th>
-                            <th class="text-lg font-medium py-2 px-4 border-2 border-gray-400">C</th>
-                            <th class="text-lg font-medium py-2 px-4 border-2 border-gray-400">D</th>
-                            <th class="text-lg font-medium py-2 px-4 border-2 border-gray-400">E</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th class="text-3xl py-2 px-4 border-2 border-gray-400">{{ $soal->kar1 }}</th>
-                            <th class="text-3xl py-2 px-4 border-2 border-gray-400">{{ $soal->kar2 }}</th>
-                            <th class="text-3xl py-2 px-4 border-2 border-gray-400">{{ $soal->kar3 }}</th>
-                            <th class="text-3xl py-2 px-4 border-2 border-gray-400">{{ $soal->kar4 }}</th>
-                            <th class="text-3xl py-2 px-4 border-2 border-gray-400">{{ $soal->kar5 }}</th>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="mx-auto flex flex-col items-center justify-center w-full bg-white fixed left-1/2 transform -translate-x-1/2 h-auto py-5 top-0 rounded-b-lg shadow-md" id="soal-utama">
+            <img src="/img/logoporos.png" alt="logoporos" class="mx-auto max-w-full h-auto">
+            <h1 class="text-2xl font-bold text-center">Sesi : {{ $jawabanteskecermatan->sesi }} / 10</h1>
+            <table class="text-sm w-1/3 justify-center h-full">
+                <thead>
+                    <tr>
+                        <th class="text-lg font-medium py-2 px-4 border-2 border-gray-400">A</th>
+                        <th class="text-lg font-medium py-2 px-4 border-2 border-gray-400">B</th>
+                        <th class="text-lg font-medium py-2 px-4 border-2 border-gray-400">C</th>
+                        <th class="text-lg font-medium py-2 px-4 border-2 border-gray-400">D</th>
+                        <th class="text-lg font-medium py-2 px-4 border-2 border-gray-400">E</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="text-3xl py-2 px-4 border-2 border-gray-400">{{ $soal->kar1 }}</th>
+                        <th class="text-3xl py-2 px-4 border-2 border-gray-400">{{ $soal->kar2 }}</th>
+                        <th class="text-3xl py-2 px-4 border-2 border-gray-400">{{ $soal->kar3 }}</th>
+                        <th class="text-3xl py-2 px-4 border-2 border-gray-400">{{ $soal->kar4 }}</th>
+                        <th class="text-3xl py-2 px-4 border-2 border-gray-400">{{ $soal->kar5 }}</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="bg-white mt-60 mb-10 mx-10 px-20 py-10 shadow-lg rounded-lg border">
             <!-- Bagian 50 Soal Acak -->
-            <form id="jawabanForm" class="mt-44" action="{{ route('submitjawabanteskecermatan') }}" method="POST" onsubmit="submitForm(event)">
+            <form id="jawabanForm" action="{{ route('submitjawabanteskecermatan') }}" method="POST" onsubmit="submitForm(event)">
                 @csrf
                 <input type="hidden" id="idformtesInput" name="idformtes" value="{{ $formtes->id }}">
                 <input type="hidden" id="idsoalInput" name="idsoal" value="{{ $soal->id }}">
