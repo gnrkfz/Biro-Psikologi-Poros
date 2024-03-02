@@ -93,7 +93,7 @@
                     </a>
                 </div>
             </div>
-            <!-- MODAL LENGKAPI DATA DIRI -->
+            <!-- MODAL EDIT PROFIL -->
             <input type="checkbox" id="tw-modal" class="peer fixed appearance-none opacity-0">
             <label for="tw-modal" class="pointer-events-none invisible fixed inset-0 flex cursor-pointer items-center justify-center overflow-hidden overscroll-contain bg-black/50 opacity-0 transition-all duration-200 ease-in-out peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100 peer-checked:[&>*]:translate-y-0 peer-checked:[&>*]:scale-100 ">
             <label for="" class="max-h-[calc(100vh)-5em] h-fit w-full max-w-xl scale-90 overflow-y-auto overscroll-contain rounded bg-white py-5 px-10 text-black shadow-lg transition">
@@ -103,7 +103,7 @@
                     </a>
                 </div>
                 <h1 class="text-xl font-semibold mb-5 text-center">Edit Profil</h1>
-                <form action="{{ route('editklien') }}" method="post">
+                <form action="{{ route('editklien') }}" method="post" onsubmit="return validateEmail()">
                     @csrf
                     <input type="hidden" name="idklien" value="{{ $klien->id }}">
                     <div class="grid grid-cols-2 gap-x-5 gap-y-2.5">
@@ -115,48 +115,48 @@
                             <label for="jeniskelamin" class="flex text-black text-md font-semibold mb-2">Jenis Kelamin</label>
                             <div>
                                 <label>
-                                    <input type="radio" name="jeniskelamin" value="L" {{ $klien->jeniskelamin == 'L' ? 'checked' : '' }} required>
+                                    <input type="radio" name="jeniskelamin" value="L" {{ $klien->jeniskelamin == 'L' ? 'checked' : '' }}>
                                     Laki-laki
                                 </label>
                             </div>
                             <div>
                                 <label>
-                                    <input type="radio" name="jeniskelamin" value="P" {{ $klien->jeniskelamin == 'P' ? 'checked' : '' }} required>
+                                    <input type="radio" name="jeniskelamin" value="P" {{ $klien->jeniskelamin == 'P' ? 'checked' : '' }}>
                                     Perempuan
                                 </label>
                             </div>
                         </div>
                         <div>
                             <label for="tanggallahir" class="flex text-black text-md font-semibold mb-2">Tanggal Lahir</label>
-                            <input type="date" name="tanggallahir" class="p-2 border-2 border-gray-400 w-full rounded" value="{{ $klien->tanggallahir }}" required></input>
+                            <input type="date" name="tanggallahir" class="p-2 border-2 border-gray-400 w-full rounded" value="{{ $klien->tanggallahir }}"></input>
                         </div>
                         <div>
                             <label for="email" class="flex text-black text-md font-semibold mb-2">Email</label>
-                            <textarea type="text" name="email" class="p-2 border-2 border-gray-400 w-full rounded" rows="1" required>{{ $klien->email }}</textarea>
+                            <textarea type="text" name="email" id="email" class="p-2 border-2 border-gray-400 w-full rounded" rows="1">{{ $klien->email }}</textarea>
                         </div>
                         <div>
                             <label for="nomortelepon" class="flex text-black text-md font-semibold mb-2">No. Telepon</label>
-                            <textarea type="text" name="nomortelepon" class="p-2 border-2 border-gray-400 w-full rounded" rows="1" required>{{ $klien->nomortelepon }}</textarea>
+                            <textarea type="text" name="nomortelepon" class="p-2 border-2 border-gray-400 w-full rounded" rows="1">{{ $klien->nomortelepon }}</textarea>
                         </div>
                         <div>
                             <label for="alamat" class="flex text-black text-md font-semibold mb-2">Alamat</label>
-                            <textarea type="text" name="alamat" class="p-2 border-2 border-gray-400 w-full rounded" rows="1" required>{{ $klien->alamat }}</textarea>
+                            <textarea type="text" name="alamat" class="p-2 border-2 border-gray-400 w-full rounded" rows="1">{{ $klien->alamat }}</textarea>
                         </div>
                         <div>
                             <label for="kota" class="flex text-black text-md font-semibold mb-2">Kota</label>
-                            <textarea type="text" name="kota" class="p-2 border-2 border-gray-400 w-full rounded" rows="1" required>{{ $klien->kota }}</textarea>
+                            <textarea type="text" name="kota" class="p-2 border-2 border-gray-400 w-full rounded" rows="1">{{ $klien->kota }}</textarea>
                         </div>
                         <div>
                             <label for="instansi" class="flex text-black text-md font-semibold mb-2">Instansi</label>
-                            <textarea type="text" name="instansi" class="p-2 border-2 border-gray-400 w-full rounded" rows="1" required>{{ $klien->instansi }}</textarea>
+                            <textarea type="text" name="instansi" class="p-2 border-2 border-gray-400 w-full rounded" rows="1">{{ $klien->instansi }}</textarea>
                         </div>
                         <div>
                             <label for="pendidikanterakhir" class="flex text-black text-md font-semibold mb-2">Pendidikan Terakhir</label>
-                            <textarea type="text" name="pendidikanterakhir" class="p-2 border-2 border-gray-400 w-full rounded" rows="1" required>{{ $klien->pendidikanterakhir }}</textarea>
+                            <textarea type="text" name="pendidikanterakhir" class="p-2 border-2 border-gray-400 w-full rounded" rows="1">{{ $klien->pendidikanterakhir }}</textarea>
                         </div>
                         <div>
                             <label for="keperluan" class="flex text-black text-md font-semibold mb-2">Keperluan</label>
-                            <textarea type="text" name="keperluan" class="p-2 border-2 border-gray-400 w-full rounded" rows="1" required>{{ $klien->keperluan }}</textarea>
+                            <textarea type="text" name="keperluan" class="p-2 border-2 border-gray-400 w-full rounded" rows="1">{{ $klien->keperluan }}</textarea>
                         </div>
                     </div>
                     <div class="flex justify-end mt-5">
@@ -213,6 +213,16 @@
                 if (confirmDelete) {
                     document.getElementById('deleteFormTes').submit();
                 }
+            }
+            function validateEmail() {
+                const emailInput = document.getElementById('email');
+                const emailValue = emailInput.value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailValue)) {
+                    alert('Format email tidak valid!');
+                    return false;
+                }
+                return true;
             }
         </script>
     </body>

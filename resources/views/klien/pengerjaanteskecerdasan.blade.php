@@ -127,14 +127,12 @@
                 var radio = document.getElementById(radioId);
                 var nomor = document.getElementById(nomorId);
                 if (radio && nomor) {
-                    radio.checked = !radio.checked;
-                    if (radio.checked) {
+                    if (!radio.checked) {
+                        radio.checked = true;
                         localStorage.setItem('jawaban-' + nomorId.split('-')[1], radioId);
-                    } else {
-                        localStorage.removeItem('jawaban-' + nomorId.split('-')[1]);
+                        nomor.classList.add('bg-blue-400');
+                        nomor.classList.remove('bg-gray-200');
                     }
-                    nomor.classList.toggle('bg-gray-200');
-                    nomor.classList.toggle('bg-blue-400', radio.checked);
                 }
             }
             function clearOption(index) {

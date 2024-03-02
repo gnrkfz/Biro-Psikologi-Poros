@@ -76,11 +76,12 @@ class KlienController extends Controller
     {
         $formtes = FormTes::find($id);
         $test = Test::find($formtes->idtest);
-        if (!session()->has('random_soal_order')) {
+        $sessionKey = 'random_soal_order_' . $formtes->id;
+        if (!session()->has($sessionKey)) {
             $randomSoalOrder = $this->generateRandomSoalOrder($test->id);
-            session(['random_soal_order' => $randomSoalOrder]);
+            session([$sessionKey => $randomSoalOrder]);
         }
-        $randomSoalOrder = session('random_soal_order');
+        $randomSoalOrder = session($sessionKey);
         $soal = $randomSoalOrder;
         return view('klien.pengerjaanteskecerdasan', compact('formtes', 'soal'));
     }

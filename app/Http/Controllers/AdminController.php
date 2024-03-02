@@ -273,21 +273,10 @@ class AdminController extends Controller
 
     public function editklien(Request $request)
     {
-        $request->validate([
-            'jeniskelamin' => 'required|in:L,P',
-            'tanggallahir' => 'required|date',
-            'email' => 'required|email',
-            'nomortelepon' => 'required|string',
-            'alamat' => 'required|string',
-            'kota' => 'required|string',
-            'instansi' => 'required|string',
-            'pendidikanterakhir' => 'required|string',
-            'keperluan' => 'required|string',
-        ]);
         $klien = Klien::find($request->input('idklien'));
         $klien->jeniskelamin = $request->input('jeniskelamin');
         $klien->tanggallahir = $request->input('tanggallahir');
-        $klien->email = $request->input('email');
+        $klien->email = strtolower($request->input('email'));
         $klien->nomortelepon = $request->input('nomortelepon');
         $klien->alamat = $request->input('alamat');
         $klien->kota = $request->input('kota');
