@@ -32,7 +32,7 @@ class KlienController extends Controller
     {
         $idUser = Auth::id();
         $user = User::find($idUser);
-        $klien = Klien::where('nama', $user->nama)->first();
+        $klien = Klien::find($idUser);
         $formtes = FormTes::where('idklien', $klien->id)
         ->where('status', 'Belum Dikerjakan')
         ->get();
