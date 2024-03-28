@@ -55,6 +55,9 @@
                     <label for="nama" class="block text-sm font-medium text-gray-600">Nama</label>
                     <input type="text" name="nama" id="nama" value="{{ old('nama') }}" class="mt-1 p-2 w-full border rounded-md">
                 </div>
+                @error('nama')
+                <p class="text-red-700 font-medium text-sm mb-2">{{ $message }}</p>
+                @enderror
                 <div class="mb-2.5">
                     <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
                     <input type="email" name="email" id="email" value="{{ old('email') }}" class="mt-1 p-2 w-full border rounded-md">

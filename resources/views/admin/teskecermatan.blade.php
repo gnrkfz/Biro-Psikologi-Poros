@@ -56,7 +56,7 @@
                     <label for="tambahsoal" class="pointer-events-none invisible fixed inset-0 flex cursor-pointer items-center justify-center overflow-hidden overscroll-contain bg-black/50 opacity-0 transition-all duration-200 ease-in-out peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100 peer-checked:[&>*]:translate-y-0 peer-checked:[&>*]:scale-100 ">
                         <label for="" class="max-h-[calc(100vh)-5em] h-fit w-full max-w-lg scale-90 overflow-y-auto overscroll-contain rounded bg-white py-5 px-10 text-black shadow-lg transition">
                             <h1 class="text-xl font-semibold mb-5">Tambah Soal</h1>
-                            <form action="{{ route('tambahsoalteskecermatan', ['id' => $id]) }}" method="post">
+                            <form action="{{ route('tambahsoalteskecermatan', ['id' => $id]) }}" method="post" onsubmit="return validateForm()">
                                 @csrf
                                 <label for="idtest" class="flex text-black text-md font-semibold mb-2">ID Test</label>
                                 <input type="text" name="idtest" placeholder="{{ $test->id }}" value="{{ $test->id }}" class="disabled p-2 border-2 border-gray-400 w-full rounded" readonly>
@@ -124,4 +124,21 @@
             </table>
         </div>
     </body>
+    <script>
+        function showAlert(message) {
+            alert(message);
+        }
+        function validateForm() {
+            var kar1 = document.getElementsByName("kar1")[0].value;
+            var kar2 = document.getElementsByName("kar2")[0].value;
+            var kar3 = document.getElementsByName("kar3")[0].value;
+            var kar4 = document.getElementsByName("kar4")[0].value;
+            var kar5 = document.getElementsByName("kar5")[0].value;
+            if (kar1.trim() === "" || kar2.trim() === "" || kar3.trim() === "" || kar4.trim() === "" || kar5.trim() === "") {
+                showAlert("Gagal menambahkan tes kecermatan. Harap lengkapi semua kolom.");
+                return false;
+            }
+            return true;
+        }
+    </script>
 </html>
