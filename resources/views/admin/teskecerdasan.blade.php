@@ -58,7 +58,7 @@
                 <input type="checkbox" id="tambahsoal" class="peer fixed appearance-none opacity-0">
                     <label for="tambahsoal" class="pointer-events-none invisible fixed inset-0 flex cursor-pointer items-center justify-center overflow-hidden overscroll-contain bg-black/50 opacity-0 transition-all duration-200 ease-in-out peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100 peer-checked:[&>*]:translate-y-0 peer-checked:[&>*]:scale-100 ">
                         <label for="" class="max-h-[calc(100vh)-5em] h-fit w-full max-w-lg scale-90 overflow-y-auto overscroll-contain rounded bg-white py-5 px-10 text-black shadow-lg transition">
-                            <form action="{{ route('tambahsoalteskecerdasan', ['id' => $id]) }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('tambahsoalteskecerdasan', ['id' => $id]) }}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                                 @csrf
                                 <label for="idtest" class="flex text-black text-md font-semibold mb-2">ID Test</label>
                                 <input type="text" name="idtest" placeholder="{{ $test->id }}" value="{{ $test->id }}" class="disabled p-2 border-2 border-gray-400 w-full rounded" readonly>
@@ -181,6 +181,25 @@
                         }
                     }
                 }
+            }
+            function showAlert(message) {
+                alert(message);
+            }
+            function validateForm() {
+                var pertanyaan = document.getElementsByName("pertanyaan")[0].value;
+                var opsi1 = document.getElementsByName("opsi1")[0].value;
+                var opsi2 = document.getElementsByName("opsi2")[0].value;
+                var opsi3 = document.getElementsByName("opsi3")[0].value;
+                var opsi4 = document.getElementsByName("opsi4")[0].value;
+                var opsi5 = document.getElementsByName("opsi5")[0].value;
+                var jawabanBenar = document.getElementsByName("jawabanbenar")[0].value;
+                var kategori = document.getElementsByName("kategori")[0].value;
+                var level = document.getElementsByName("level")[0].value;
+                if (pertanyaan.trim() === "" || opsi1.trim() === "" || opsi2.trim() === "" || opsi3.trim() === "" || opsi4.trim() === "" || opsi5.trim() === "" || jawabanBenar.trim() === "" || kategori === "Pilih Kategori" || level === "Pilih Level") {
+                    showAlert("Gagal menambahkan soal. Harap lengkapi semua kolom.");
+                    return false;
+                }
+                return true;
             }
         </script>
     </body>
