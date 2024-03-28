@@ -170,6 +170,15 @@ class AdminController extends Controller
         return redirect()->route('teskecerdasan', ['id' => $request->input('idtest')]);
     }
 
+    public function deletesoalkecerdasan($id)
+    {
+        $soal = TesKecerdasan::find($id);
+        $idtest = $soal->idtest;
+        $soal->idtest = 999999;
+        $soal->save();
+        return redirect()->route('teskecerdasan', ['id' => $idtest]);
+    }
+
     public function tambahteskecermatan(Request $request)
     {
         $request->validate([
@@ -180,15 +189,6 @@ class AdminController extends Controller
         $test->jenis = 'Tes Kecermatan';
         $test->save();
         return redirect()->route('admin.dashboard');
-    }
-
-    public function deletesoalkecerdasan($id)
-    {
-        $soal = TesKecerdasan::find($id);
-        $idtest = $soal->idtest;
-        $soal->idtest = 999999;
-        $soal->save();
-        return redirect()->route('teskecerdasan', ['id' => $idtest]);
     }
 
     public function teskecermatan($id)
