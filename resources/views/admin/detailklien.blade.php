@@ -22,21 +22,36 @@
                         <a href="/admin/daftarklien" class="block py-2 px-4 text-blue-700 hover:text-blue-800 rounded" aria-current="page">Klien</a>
                     </li>
                     <li>
-                        <a href="/logout" id="logoutButton" class="block py-2 px-4 text-black rounded hover:text-red-900">Keluar</a>
+                        <a onclick="showLogoutConfirmation()" class="block py-2 px-4 text-black rounded hover:text-red-900 cursor-pointer">Keluar</a>
                     </li>
                 </ul>
             </div>
         </nav>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            function showLogoutConfirmation(event) {
-                event.preventDefault();
-                var confirmLogout = confirm("Apakah anda yakin ingin keluar?");
-                if (confirmLogout) {
-                    window.location.href = "/logout";
-                }
-            }
-            document.getElementById("logoutButton").addEventListener("click", showLogoutConfirmation);
+            function showLogoutConfirmation() {
+                Swal.fire({
+                    text: 'Apakah anda yakin ingin keluar?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1d4ed8',
+                    cancelButtonColor: '#b91c1c',
+                    confirmButtonText: 'Ya, Keluar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/logout";
+                    }
+                });
+            };
         </script>
+        @if(session('addformtestsuccess'))
+        <script>
+            Swal.fire({
+                title: "{{ session('addformtestsuccess') }}",
+                icon: "success"
+            });
+        </script>
+        @endif
 
         <!-- CONTENT -->
         <div class="bg-white my-10 mx-10 px-20 py-10 shadow-lg rounded-lg">
@@ -88,7 +103,7 @@
                     </a>
                 </div>
                 <div class="text-right">
-                    <a onclick="deleteKlien(event)" class="cursor-pointer rounded h-fit text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 py-2 px-4">
+                    <a onclick="deleteKlien()" class="cursor-pointer rounded h-fit text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 py-2 px-4">
                         Delete
                     </a>
                 </div>
@@ -187,10 +202,10 @@
                         <th class="py-2 px-4 border-2 border-gray-400">
                             <a href="{{ route('detailriwayattes', ['id' => $tes->id]) }}" class="text-blue-700 hover:text-blue-800 block">Detail</a>
                             @if($tes->status == 'Belum Dikerjakan')
-                                <form id="deleteFormTes" action="{{ route('deleteformtes', ['id' => $tes->id]) }}" method="POST" class="flex justify-center mt-1">
+                                <form id="deleteFormTes{{ $tes->id }}" action="{{ route('deleteformtes', ['id' => $tes->id]) }}" method="POST" class="flex justify-center mt-1">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="cursor-pointer text-red-700 hover:text-red-800 block" onclick="deleteFormTesConfirmation(event)">Delete</button>
+                                    <button type="button" class="cursor-pointer text-red-700 hover:text-red-800 block" onclick="deleteFormTesConfirmation({{ $tes->id }})">Delete</button>
                                 </form>
                             @endif
                         </th>
@@ -200,19 +215,48 @@
             </table>
         </div>
         <script>
-            function deleteKlien(event) {
-                event.preventDefault();
-                var confirmDelete = confirm("Apakah anda yakin ingin menghapus Klien beserta history test secara permanen?");
-                if (confirmDelete) {
-                    window.location.href = "{{ route('deleteklien', ['id' => $klien->id]) }}";
-                }
-            }
-            function deleteFormTesConfirmation(event) {
-                event.preventDefault();
-                var confirmDelete = confirm("Apakah anda yakin ingin menghapus Form Tes?");
-                if (confirmDelete) {
-                    document.getElementById('deleteFormTes').submit();
-                }
+            function deleteKlien() {
+                Swal.fire({
+                    text: 'Apakah anda yakin ingin menghapus Klien beserta history test secara permanen?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1d4ed8',
+                    cancelButtonColor: '#b91c1c',
+                    confirmButtonText: 'Ya, Hapus'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            icon: "success",
+                            showConfirmButton: false,
+                        });
+                        setTimeout(() => {
+                            window.location.href = "{{ route('deleteklien', ['id' => $klien->id]) }}";
+                        }, 500);
+                    }
+                });
+            };
+            function deleteFormTesConfirmation(tesId) {
+                Swal.fire({
+                    text: 'Apakah anda yakin ingin menghapus test termasuk soal di dalamnya secara permanen?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1d4ed8',
+                    cancelButtonColor: '#b91c1c',
+                    confirmButtonText: 'Ya, Hapus'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Test has been deleted.",
+                            icon: "success",
+                            showConfirmButton: false,
+                        });
+                        setTimeout(() => {
+                            document.getElementById('deleteFormTes' + tesId).submit();
+                        }, 500);
+                    }
+                });
             }
             function validateEmail() {
                 const emailInput = document.getElementById('email');

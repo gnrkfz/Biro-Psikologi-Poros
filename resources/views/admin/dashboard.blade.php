@@ -22,21 +22,44 @@
                         <a href="daftarklien" class="block py-2 px-4 text-black rounded hover:text-blue-800">Klien</a>
                     </li>
                     <li>
-                        <a href="/logout" id="logoutButton" class="block py-2 px-4 text-black rounded hover:text-red-900">Keluar</a>
+                        <a onclick="showLogoutConfirmation()" class="block py-2 px-4 text-black rounded hover:text-red-900 cursor-pointer">Keluar</a>
                     </li>
                 </ul>
             </div>
         </nav>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            function showLogoutConfirmation(event) {
-                event.preventDefault();
-                var confirmLogout = confirm("Apakah anda yakin ingin keluar?");
-                if (confirmLogout) {
-                    window.location.href = "/logout";
-                }
-            }
-            document.getElementById("logoutButton").addEventListener("click", showLogoutConfirmation);
+            function showLogoutConfirmation() {
+                Swal.fire({
+                    text: 'Apakah anda yakin ingin keluar?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1d4ed8',
+                    cancelButtonColor: '#b91c1c',
+                    confirmButtonText: 'Ya, Keluar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/logout";
+                    }
+                });
+            };
         </script>
+        @if(session('updatepasswordsuccess'))
+        <script>
+            Swal.fire({
+                text: "{{ session('updatepasswordsuccess') }}",
+                icon: "success"
+            });
+        </script>
+        @endif
+        @if(session('createadminsuccess'))
+        <script>
+            Swal.fire({
+                text: "{{ session('createadminsuccess') }}",
+                icon: "success"
+            });
+        </script>
+        @endif
 
         <!-- CONTENT -->
         <div class="bg-white my-10 mx-10 px-20 py-10 shadow-lg rounded-lg">
@@ -134,10 +157,10 @@
                         <th class="py-2 px-4 border-2 border-gray-400 font-normal text-left">{{ $test->jenis }}</th>
                         <th class="py-2 px-4 border-2 border-gray-400">
                             <a href="{{ route('test.detail', ['id' => $test->id]) }}" class="text-blue-700">Detail</a>
-                            <form id="deleteTestForm" action="{{ route('deletetest', ['id' => $test->id]) }}" method="POST" class="flex justify-center mt-1">
+                            <form id="deleteTest{{ $test->id }}" action="{{ route('deletetest', ['id' => $test->id]) }}" method="POST" class="flex justify-center mt-1">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="cursor-pointer text-red-700 hover:text-red-800 block" onclick="deleteTestConfirmation(event)">Delete</button>
+                                <button type="button" class="cursor-pointer text-red-700 hover:text-red-800 block" onclick="deleteTestConfirmation('{{ $test->id }}')">Delete</button>
                             </form>
                         </th>
                     </tr>
@@ -147,13 +170,28 @@
         </div>
         <!-- FUNGSI ALERT HAPUS TES -->
         <script>
-            function deleteTestConfirmation(event) {
-                event.preventDefault();
-                var confirmDelete = confirm("Apakah anda yakin ingin menghapus Test termasuk soal di dalamnya secara permanen?");
-                if (confirmDelete) {
-                    document.getElementById('deleteTestForm').submit();
-                }
-            }
+            function deleteTestConfirmation(testId) {
+                Swal.fire({
+                    text: 'Apakah anda yakin ingin menghapus test termasuk soal di dalamnya secara permanen?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1d4ed8',
+                    cancelButtonColor: '#b91c1c',
+                    confirmButtonText: 'Ya, Hapus'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "Test has been deleted.",
+                            icon: "success",
+                            showConfirmButton: false,
+                        });
+                        setTimeout(() => {
+                            document.getElementById('deleteTest' + testId).submit();
+                        }, 500);
+                    }
+                });
+            };
         </script>
         <!-- FUNGSI SEARCH -->
         <script>

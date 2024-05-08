@@ -22,20 +22,27 @@
                         <a href="daftarklien" class="block py-2 px-4 text-black rounded hover:text-blue-800">Klien</a>
                     </li>
                     <li>
-                        <a href="/logout" id="logoutButton" class="block py-2 px-4 text-black rounded hover:text-red-900">Keluar</a>
+                        <a onclick="showLogoutConfirmation()" class="block py-2 px-4 text-black rounded hover:text-red-900 cursor-pointer">Keluar</a>
                     </li>
                 </ul>
             </div>
         </nav>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            function showLogoutConfirmation(event) {
-                event.preventDefault();
-                var confirmLogout = confirm("Apakah anda yakin ingin keluar?");
-                if (confirmLogout) {
-                    window.location.href = "/logout";
-                }
-            }
-            document.getElementById("logoutButton").addEventListener("click", showLogoutConfirmation);
+            function showLogoutConfirmation() {
+                Swal.fire({
+                    text: 'Apakah anda yakin ingin keluar?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1d4ed8',
+                    cancelButtonColor: '#b91c1c',
+                    confirmButtonText: 'Ya, Keluar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/logout";
+                    }
+                });
+            };
         </script>
 
         <!-- CONTENT -->

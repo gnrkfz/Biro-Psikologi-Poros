@@ -22,21 +22,36 @@
                         <a href="/admin/daftarklien" class="block py-2 px-4 text-blue-700 hover:text-blue-800 rounded" aria-current="page">Klien</a>
                     </li>
                     <li>
-                        <a href="/logout" id="logoutButton" class="block py-2 px-4 text-black rounded hover:text-red-900">Keluar</a>
+                        <a onclick="showLogoutConfirmation()" class="block py-2 px-4 text-black rounded hover:text-red-900 cursor-pointer">Keluar</a>
                     </li>
                 </ul>
             </div>
         </nav>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            function showLogoutConfirmation(event) {
-                event.preventDefault();
-                var confirmLogout = confirm("Apakah anda yakin ingin keluar?");
-                if (confirmLogout) {
-                    window.location.href = "/logout";
-                }
-            }
-            document.getElementById("logoutButton").addEventListener("click", showLogoutConfirmation);
+            function showLogoutConfirmation() {
+                Swal.fire({
+                    text: 'Apakah anda yakin ingin keluar?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1d4ed8',
+                    cancelButtonColor: '#b91c1c',
+                    confirmButtonText: 'Ya, Keluar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "/logout";
+                    }
+                });
+            };
         </script>
+        @if(session('success'))
+        <script>
+            Swal.fire({
+                title: "{{ session('success') }}",
+                icon: "success"
+            });
+        </script>
+        @endif
 
         <!-- CONTENT -->
         <div class="bg-white mt-10 mx-10 px-20 py-10 shadow-lg rounded-lg text-center">

@@ -54,7 +54,7 @@ class AdminController extends Controller
         $user->update([
             'password' => Hash::make($request->password),
         ]);
-        return redirect()->back()->with('success', 'Kata sandi berhasil diperbarui.');
+        return redirect()->route('admin.dashboard')->with('updatepasswordsuccess', 'Kata sandi berhasil diperbarui.');
     }
 
     public function tambahadmin(Request $request)
@@ -75,7 +75,7 @@ class AdminController extends Controller
             'password' => Hash::make($request->password),
             'role' => 'admin'
         ]);
-        return redirect()->back()->with('success', 'Akun berhasil ditambahkan.');
+        return redirect()->route('admin.dashboard')->with('createadminsuccess', 'Akun berhasil ditambahkan.');
     }
 
     public function tambahteskecerdasan(Request $request)
@@ -92,18 +92,14 @@ class AdminController extends Controller
 
     public function deletetest($id)
     {
-        try {
-            $test = Test::findOrFail($id);
-            if ($test->jenis == "Tes Kecerdasan") {
-                TesKecerdasan::where('idtest', $test->id)->delete();
-            } else if ($test->jenis == "Tes Kecermatan") {
-                TesKecermatan::where('idtest', $test->id)->delete();
-            }
-            $test->delete();
-            return redirect()->route('admin.dashboard');
-        } catch (\Exception $e) {
-            return redirect()->route('admin.dashboard');
+        $test = Test::find($id);
+        if ($test->jenis == "Tes Kecerdasan") {
+            TesKecerdasan::where('idtest', $test->id)->update(['idtest' => 999999]);
+        } else if ($test->jenis == "Tes Kecermatan") {
+            TesKecermatan::where('idtest', $test->id)->delete();
         }
+        $test->delete();
+        return redirect()->route('admin.dashboard');
     }
 
     public function teskecerdasan($id)
@@ -261,7 +257,7 @@ class AdminController extends Controller
         $klien->id = $user->id;
         $klien->nama = $request->input('nama');
         $klien->save();
-        return redirect()->route('admin.daftarklien');
+        return redirect()->route('admin.daftarklien')->with('success', 'Added!');
     }
 
     public function detailklien($id)
@@ -322,7 +318,7 @@ class AdminController extends Controller
             $klien->updated_at = now();
             $klien->save();
         }
-        return redirect()->route('detailklien', ['id' => $idklien]);
+        return redirect()->route('detailklien', ['id' => $idklien])->with('addformtestsuccess', 'Added!');
     }
 
     public function deleteformtes($id)
