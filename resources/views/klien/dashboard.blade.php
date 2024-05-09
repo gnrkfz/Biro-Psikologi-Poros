@@ -108,7 +108,7 @@
                         </div>
                         <div class="w-1/6">
                             @if($index + 1 == 1)
-                            <a href="{{ $formtes->jenistest == 'Tes Kecerdasan' ? route('pengerjaanteskecerdasan', ['id' => $formtes->id]) : route('pengerjaanteskecermatan', ['id' => $formtes->id, 'sesi' => 1]) }}" class="text-sm bg-blue-700 hover:bg-blue-800 text-white px-3 py-2 rounded-lg">KERJAKAN SEKARANG</a>
+                            <a onclick="startTest(event)" href="{{ $formtes->jenistest == 'Tes Kecerdasan' ? route('pengerjaanteskecerdasan', ['id' => $formtes->id]) : route('pengerjaanteskecermatan', ['id' => $formtes->id, 'sesi' => 1]) }}" class="text-sm bg-blue-700 hover:bg-blue-800 text-white px-3 py-2 rounded-lg">KERJAKAN SEKARANG</a>
                             @else
                             <a disabled class="text-sm bg-gray-500 text-white px-3 py-2 rounded-lg">KERJAKAN SEKARANG</a>
                             @endif
@@ -125,10 +125,26 @@
                 </a>
             </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             history.pushState(null, null, location.href);
             window.onpopstate = function () {
                 history.go(1);
+            };
+            function startTest(event) {
+                event.preventDefault();
+                Swal.fire({
+                    text: 'Apakah anda yakin ingin memulai tes?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1d4ed8',
+                    cancelButtonColor: '#b91c1c',
+                    confirmButtonText: 'Ya, Mulai'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = event.target.getAttribute('href');
+                    }
+                });
             };
         </script>
     </body>

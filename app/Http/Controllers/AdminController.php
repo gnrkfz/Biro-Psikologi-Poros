@@ -263,7 +263,7 @@ class AdminController extends Controller
     public function detailklien($id)
     {
         $klien = Klien::find($id);
-        $dataTes = FormTes::join('test', 'formtes.idtest', '=', 'test.id')->where('formtes.idklien', $id)->select('formtes.*', 'test.judul as judul')->orderByDesc('formtes.id')->get();
+        $dataTes = FormTes::join('test', 'formtes.idtest', '=', 'test.id')->where('formtes.idklien', $id)->select('formtes.*', 'test.judul as judul')->get();
         return view('admin.detailklien', ['klien' => $klien], ['dataTes' => $dataTes]);
     }
 
@@ -280,7 +280,7 @@ class AdminController extends Controller
         $klien->pendidikanterakhir = $request->input('pendidikanterakhir');
         $klien->keperluan = $request->input('keperluan');
         $klien->save();
-        return redirect()->route('detailklien', ['id' => $request->input('idklien')]);
+        return redirect()->route('detailklien', ['id' => $request->input('idklien')])->with('editkliensuccess', 'Success!');
     }
 
     public function deleteklien($id)

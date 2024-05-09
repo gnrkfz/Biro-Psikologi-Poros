@@ -69,7 +69,7 @@ class KlienController extends Controller
         $klien->pendidikanterakhir = $request->input('pendidikanterakhir');
         $klien->keperluan = $request->input('keperluan');
         $klien->save();
-        return redirect()->route('klien.dashboard');
+        return redirect()->route('klien.dashboard')->with('isidatadirisuccess', 'Success!');
     }
 
     public function pengerjaanteskecerdasan($id)

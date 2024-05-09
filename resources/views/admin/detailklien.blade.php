@@ -52,6 +52,14 @@
             });
         </script>
         @endif
+        @if(session('editkliensuccess'))
+        <script>
+            Swal.fire({
+                title: "{{ session('editkliensuccess') }}",
+                icon: "success"
+            });
+        </script>
+        @endif
 
         <!-- CONTENT -->
         <div class="bg-white my-10 mx-10 px-20 py-10 shadow-lg rounded-lg">
@@ -248,7 +256,6 @@
                     if (result.isConfirmed) {
                         Swal.fire({
                             title: "Deleted!",
-                            text: "Test has been deleted.",
                             icon: "success",
                             showConfirmButton: false,
                         });
