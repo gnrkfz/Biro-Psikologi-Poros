@@ -50,8 +50,8 @@
         <a href="#" onclick="history.back();" class="text-black">
             <span class="text-xl">&larr;</span> Back
         </a>
-        <h1 class="text-xl font-semibold text-center mb-5">Edit Soal</h1>
-            <form action="{{ route('editsoalteskecerdasan', ['id' => $soal->id]) }}" method="post" enctype="multipart/form-data">
+        <h1 class="text-xl font-semibold text-center mb-5">Update Soal</h1>
+            <form action="{{ route('editsoalteskecerdasan', ['id' => $soal->id]) }}" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
                 @csrf
                 <label for="idtest" class="flex text-black text-md font-semibold mb-2">ID Test</label>
                 <input type="text" name="idtest" placeholder="{{ $test->id }}" value="{{ $test->id }}" class="disabled p-2 border-2 border-gray-400 w-full rounded" readonly>
@@ -65,23 +65,23 @@
                 <input type="file" name="gambarsoal" accept=".jpg, .jpeg, .png" class="border-2 border-gray-400 w-full rounded">
                 <div class="grid grid-cols-2 gap-x-10 gap-y-2.5 mt-2.5">
                     <div>
-                        <label for="opsi1" class="flex text-black text-md font-semibold mb-2">Opsi1</label>
+                        <label for="opsi1" class="flex text-black text-md font-semibold mb-2">Opsi 1</label>
                         <textarea type="text" name="opsi1" rows="1" class="p-2 border-2 border-gray-400 w-full rounded" required>{{ $soal->opsi1 }}</textarea>
                     </div>
                     <div>
-                        <label for="opsi2" class="flex text-black text-md font-semibold mb-2">Opsi2</label>
+                        <label for="opsi2" class="flex text-black text-md font-semibold mb-2">Opsi 2</label>
                         <textarea type="text" name="opsi2" rows="1" class="p-2 border-2 border-gray-400 w-full rounded" required>{{ $soal->opsi2 }}</textarea>
                     </div>
                     <div>
-                        <label for="opsi3" class="flex text-black text-md font-semibold mb-2">Opsi3</label>
+                        <label for="opsi3" class="flex text-black text-md font-semibold mb-2">Opsi 3</label>
                         <textarea type="text" name="opsi3" rows="1" class="p-2 border-2 border-gray-400 w-full rounded" required>{{ $soal->opsi3 }}</textarea>
                     </div>
                     <div>
-                        <label for="opsi4" class="flex text-black text-md font-semibold mb-2">Opsi4</label>
+                        <label for="opsi4" class="flex text-black text-md font-semibold mb-2">Opsi 4</label>
                         <textarea type="text" name="opsi4" rows="1" class="p-2 border-2 border-gray-400 w-full rounded" required>{{ $soal->opsi4 }}</textarea>
                     </div>
                     <div>
-                        <label for="opsi5" class="flex text-black text-md font-semibold mb-2">Opsi5</label>
+                        <label for="opsi5" class="flex text-black text-md font-semibold mb-2">Opsi 5</label>
                         <textarea type="text" name="opsi5" rows="1" class="p-2 border-2 border-gray-400 w-full rounded" required>{{ $soal->opsi5 }}</textarea>
                     </div>
                     <div>
@@ -136,5 +136,45 @@
                 </div>
             </form>
         </div>
+        <script>
+            function validateForm() {
+                var pertanyaan = document.getElementsByName("pertanyaan")[0].value;
+                var opsi1 = document.getElementsByName("opsi1")[0].value;
+                var opsi2 = document.getElementsByName("opsi2")[0].value;
+                var opsi3 = document.getElementsByName("opsi3")[0].value;
+                var opsi4 = document.getElementsByName("opsi4")[0].value;
+                var opsi5 = document.getElementsByName("opsi5")[0].value;
+                var jawabanBenar = document.getElementsByName("jawabanbenar")[0].value;
+                var kategori = document.getElementsByName("kategori")[0].value;
+                var level = document.getElementsByName("level")[0].value;
+                var options = [opsi1, opsi2, opsi3, opsi4, opsi5];
+                for (let i = 0; i < options.length; i++) {
+                    for (let j = i + 1; j < options.length; j++) {
+                        if (options[i].trim() === options[j].trim()) {
+                            Swal.fire({
+                                text: "Semua opsi harus berbeda.",
+                                icon: "error"
+                            });
+                            return false;
+                        }
+                    }
+                }
+                if (!options.includes(jawabanBenar)) {
+                    Swal.fire({
+                        text: "Jawaban benar harus sesuai dengan salah satu opsi.",
+                        icon: "error"
+                    });
+                    return false;
+                }
+                if (pertanyaan.trim() === "" || opsi1.trim() === "" || opsi2.trim() === "" || opsi3.trim() === "" || opsi4.trim() === "" || opsi5.trim() === "" || jawabanBenar.trim() === "" || kategori === "Pilih Kategori" || level === "Pilih Level") {
+                    Swal.fire({
+                        text: "Harap lengkapi kategori dan level soal.",
+                        icon: "error"
+                    });
+                    return false;
+                }
+                return true;
+            }
+        </script>
     </body>
 </html>

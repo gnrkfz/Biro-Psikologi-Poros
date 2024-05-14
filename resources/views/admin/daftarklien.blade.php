@@ -44,10 +44,10 @@
                 });
             };
         </script>
-        @if(session('success'))
+        @if(session('tambahkliensuccess'))
         <script>
             Swal.fire({
-                title: "{{ session('success') }}",
+                title: "{{ session('tambahkliensuccess') }}",
                 icon: "success"
             });
         </script>
@@ -138,7 +138,7 @@
                 table = document.querySelector("table");
                 tr = table.getElementsByTagName("tr");
                 for (i = 1; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("th")[0];
+                    td = tr[i].getElementsByTagName("th")[1];
                     if (td) {
                         txtValue = td.textContent || td.innerText;
                         if (txtValue.toUpperCase().indexOf(filter) > -1) {

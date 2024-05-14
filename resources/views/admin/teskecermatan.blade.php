@@ -129,6 +129,12 @@
                 @endforeach
             </tbody>
             </table>
+            <h5 class="mt-5 font-medium">Keterangan :</h5>
+            <h5>
+                <span class="{{ $jumlahSoal >= 10 ? 'text-green-500' : 'text-red-500' }}">
+                    Jumlah Soal : {{ $jumlahSoal }}
+                </span>
+            </h5>
         </div>
     </body>
     <script>

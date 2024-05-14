@@ -83,11 +83,15 @@ class AdminController extends Controller
         $request->validate([
             'judul' => 'required|string|max:255',
         ]);
+        $existingTest = Test::where('judul', $request->input('judul'))->first();
+        if ($existingTest) {
+            return redirect()->route('admin.dashboard')->with('tambahtesfailed', 'Failed!');
+        }
         $test = new Test;
         $test->judul = $request->input('judul');
         $test->jenis = 'Tes Kecerdasan';
         $test->save();
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.dashboard')->with('tambahtessuccess', 'Added!');
     }
 
     public function deletetest($id)
@@ -106,7 +110,29 @@ class AdminController extends Controller
     {
         $test = Test::find($id);
         $soals = TesKecerdasan::where('idtest', $id)->orderBy('kategori')->orderBy('level')->get();
-        return view('admin.teskecerdasan', compact('test', 'id', 'soals'));
+        $jumlahSoal = [
+            'Aritmatika' => [
+                'Level 1' => $soals->where('kategori', 'Aritmatika')->where('level', 1)->count(),
+                'Level 2' => $soals->where('kategori', 'Aritmatika')->where('level', 2)->count(),
+                'Level 3' => $soals->where('kategori', 'Aritmatika')->where('level', 3)->count(),
+            ],
+            'Logis' => [
+                'Level 1' => $soals->where('kategori', 'Logis')->where('level', 1)->count(),
+                'Level 2' => $soals->where('kategori', 'Logis')->where('level', 2)->count(),
+                'Level 3' => $soals->where('kategori', 'Logis')->where('level', 3)->count(),
+            ],
+            'Non Verbal' => [
+                'Level 1' => $soals->where('kategori', 'Non Verbal')->where('level', 1)->count(),
+                'Level 2' => $soals->where('kategori', 'Non Verbal')->where('level', 2)->count(),
+                'Level 3' => $soals->where('kategori', 'Non Verbal')->where('level', 3)->count(),
+            ],
+            'Verbal' => [
+                'Level 1' => $soals->where('kategori', 'Verbal')->where('level', 1)->count(),
+                'Level 2' => $soals->where('kategori', 'Verbal')->where('level', 2)->count(),
+                'Level 3' => $soals->where('kategori', 'Verbal')->where('level', 3)->count(),
+            ],
+        ];
+        return view('admin.teskecerdasan', compact('test', 'id', 'soals', 'jumlahSoal'));
     }
 
     public function tambahsoalteskecerdasan(Request $request)
@@ -180,18 +206,23 @@ class AdminController extends Controller
         $request->validate([
             'judul' => 'required|string|max:255',
         ]);
+        $existingTest = Test::where('judul', $request->input('judul'))->first();
+        if ($existingTest) {
+            return redirect()->route('admin.dashboard')->with('tambahtesfailed', 'Failed!');
+        }
         $test = new Test;
         $test->judul = $request->input('judul');
         $test->jenis = 'Tes Kecermatan';
         $test->save();
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin.dashboard')->with('tambahtessuccess', 'Added!');
     }
 
     public function teskecermatan($id)
     {
         $test = Test::find($id);
         $soals = TesKecermatan::where('idtest', $id)->get();
-        return view('admin.teskecermatan', compact('test', 'id', 'soals'));
+        $jumlahSoal = $soals->count();
+        return view('admin.teskecermatan', compact('test', 'id', 'soals', 'jumlahSoal'));
     }
 
     public function tambahsoalteskecermatan(Request $request)
@@ -257,7 +288,7 @@ class AdminController extends Controller
         $klien->id = $user->id;
         $klien->nama = $request->input('nama');
         $klien->save();
-        return redirect()->route('admin.daftarklien')->with('success', 'Added!');
+        return redirect()->route('admin.daftarklien')->with('tambahkliensuccess', 'Added!');
     }
 
     public function detailklien($id)

@@ -48,7 +48,7 @@ class KlienController extends Controller
         $request->validate([
             'jeniskelamin' => 'required|in:L,P',
             'tanggallahir' => 'required|date',
-            'email' => 'required|email',
+            'email' => 'required|string',
             'nomortelepon' => 'required|string',
             'alamat' => 'required|string',
             'kota' => 'required|string',

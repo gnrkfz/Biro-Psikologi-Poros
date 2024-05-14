@@ -46,7 +46,7 @@
         </script>
 
         <!-- CONTENT -->
-        <div class="bg-white mt-10 mx-10 px-20 py-10 shadow-lg rounded-lg">
+        <div class="bg-white my-10 mx-10 px-20 py-10 shadow-lg rounded-lg">
         <a href="/admin/dashboard" class="text-black">
             <span class="text-xl">&larr;</span> Back
         </a>
@@ -71,7 +71,7 @@
                                 <input type="text" name="idtest" placeholder="{{ $test->id }}" value="{{ $test->id }}" class="disabled p-2 border-2 border-gray-400 w-full rounded" readonly>
                                 <label for="pertanyaan" class="flex text-black text-md font-semibold my-2">Pertanyaan</label>
                                 <textarea type="text" name="pertanyaan" rows="2" placeholder="" class="p-2 border-2 border-gray-400 w-full rounded" required></textarea>
-                                <label for="gambarsoal" class="flex text-black text-md font-semibold mt-1 mb-2">Upload Gambar</label>
+                                <label for="gambarsoal" class="flex text-black text-md font-semibold mt-1 mb-2">Upload Gambar (JPG, JPEG, PNG)</label>
                                 <input type="file" name="gambarsoal" accept=".jpg, .jpeg, .png" class="border-2 border-gray-400 w-full rounded">
                                 <div class="grid grid-cols-2 gap-x-5 gap-y-2 mt-2">
                                     <div>
@@ -158,7 +158,7 @@
                         <th class="py-2 px-4 border-2 border-gray-400 font-normal text-left">{{ $soal->kategori }}</th>
                         <th class="py-2 px-4 border-2 border-gray-400 font-normal">{{ $soal->level }}</th>
                         <th class="py-2 px-4 border-2 border-gray-400 justify-center">
-                            <a href="{{ route('detailsoalteskecerdasan', ['id' => $soal->id]) }}" class="cursor-pointer text-blue-700 hover:text-blue-800 block">Detail</a>
+                            <a href="{{ route('detailsoalteskecerdasan', ['id' => $soal->id]) }}" class="cursor-pointer text-blue-700 hover:text-blue-800 block">Update</a>
                             <form action="{{ route('deletesoalkecerdasan', ['id' => $soal->id]) }}" method="POST" class="flex justify-center mt-1">
                                 @csrf
                                 <button type="submit" class="cursor-pointer text-red-700 hover:text-red-800 block">Delete</button>
@@ -168,6 +168,77 @@
                     @endforeach
                 </tbody>
             </table>
+            <h5 class="mt-5 font-medium">Keterangan :</h5>
+            <div class="flex grid-cols-4">
+                <div class="w-1/4">
+                <h5>
+                    <span class="{{ $jumlahSoal['Aritmatika']['Level 1'] >= 12 ? 'text-green-500' : 'text-red-500' }}">
+                        Jumlah Soal Aritmatika Level 1 : {{ $jumlahSoal['Aritmatika']['Level 1'] }}
+                    </span>
+                </h5>
+                <h5>
+                    <span class="{{ $jumlahSoal['Aritmatika']['Level 2'] >= 7 ? 'text-green-500' : 'text-red-500' }}">
+                        Jumlah Soal Aritmatika Level 2 : {{ $jumlahSoal['Aritmatika']['Level 2'] }}
+                    </span>
+                </h5>
+                <h5>
+                    <span class="{{ $jumlahSoal['Aritmatika']['Level 3'] >= 6 ? 'text-green-500' : 'text-red-500' }}">
+                        Jumlah Soal Aritmatika Level 3 : {{ $jumlahSoal['Aritmatika']['Level 3'] }}
+                    </span>
+                </h5>
+                </div>
+                <div class="w-1/4">
+                <h5>
+                    <span class="{{ $jumlahSoal['Logis']['Level 1'] >= 12 ? 'text-green-500' : 'text-red-500' }}">
+                        Jumlah Soal Logis Level 1 : {{ $jumlahSoal['Logis']['Level 1'] }}
+                    </span>
+                </h5>
+                <h5>
+                    <span class="{{ $jumlahSoal['Logis']['Level 2'] >= 7 ? 'text-green-500' : 'text-red-500' }}">
+                        Jumlah Soal Logis Level 2 : {{ $jumlahSoal['Logis']['Level 2'] }}
+                    </span>
+                </h5>
+                <h5>
+                    <span class="{{ $jumlahSoal['Logis']['Level 3'] >= 6 ? 'text-green-500' : 'text-red-500' }}">
+                        Jumlah Soal Logis Level 3 : {{ $jumlahSoal['Logis']['Level 3'] }}
+                    </span>
+                </h5>
+                </div>
+                <div class="w-1/4">
+                <h5>
+                    <span class="{{ $jumlahSoal['Non Verbal']['Level 1'] >= 12 ? 'text-green-500' : 'text-red-500' }}">
+                        Jumlah Soal Non Verbal Level 1 : {{ $jumlahSoal['Non Verbal']['Level 1'] }}
+                    </span>
+                </h5>
+                <h5>
+                    <span class="{{ $jumlahSoal['Non Verbal']['Level 2'] >= 7 ? 'text-green-500' : 'text-red-500' }}">
+                        Jumlah Soal Non Verbal Level 2 : {{ $jumlahSoal['Non Verbal']['Level 2'] }}
+                    </span>
+                </h5>
+                <h5>
+                    <span class="{{ $jumlahSoal['Non Verbal']['Level 3'] >= 6 ? 'text-green-500' : 'text-red-500' }}">
+                        Jumlah Soal Non Verbal Level 3 : {{ $jumlahSoal['Non Verbal']['Level 3'] }}
+                    </span>
+                </h5>
+                </div>
+                <div class="w-1/4">
+                <h5>
+                    <span class="{{ $jumlahSoal['Verbal']['Level 1'] >= 12 ? 'text-green-500' : 'text-red-500' }}">
+                        Jumlah Soal Verbal Level 1 : {{ $jumlahSoal['Verbal']['Level 1'] }}
+                    </span>
+                </h5>
+                <h5>
+                    <span class="{{ $jumlahSoal['Verbal']['Level 2'] >= 7 ? 'text-green-500' : 'text-red-500' }}">
+                        Jumlah Soal Verbal Level 2 : {{ $jumlahSoal['Verbal']['Level 2'] }}
+                    </span>
+                </h5>
+                <h5>
+                    <span class="{{ $jumlahSoal['Verbal']['Level 3'] >= 6 ? 'text-green-500' : 'text-red-500' }}">
+                        Jumlah Soal Verbal Level 3 : {{ $jumlahSoal['Verbal']['Level 3'] }}
+                    </span>
+                </h5>
+                </div>
+            </div>
         </div>
         <!-- FUNGSI SEARCH SOAL -->
         <script>
@@ -189,9 +260,6 @@
                     }
                 }
             }
-            function showAlert(message) {
-                alert(message);
-            }
             function validateForm() {
                 var pertanyaan = document.getElementsByName("pertanyaan")[0].value;
                 var opsi1 = document.getElementsByName("opsi1")[0].value;
@@ -202,8 +270,30 @@
                 var jawabanBenar = document.getElementsByName("jawabanbenar")[0].value;
                 var kategori = document.getElementsByName("kategori")[0].value;
                 var level = document.getElementsByName("level")[0].value;
+                var options = [opsi1, opsi2, opsi3, opsi4, opsi5];
+                for (let i = 0; i < options.length; i++) {
+                    for (let j = i + 1; j < options.length; j++) {
+                        if (options[i].trim() === options[j].trim()) {
+                            Swal.fire({
+                                text: "Semua opsi harus berbeda.",
+                                icon: "error"
+                            });
+                            return false;
+                        }
+                    }
+                }
+                if (!options.includes(jawabanBenar)) {
+                    Swal.fire({
+                        text: "Jawaban benar harus sesuai dengan salah satu opsi.",
+                        icon: "error"
+                    });
+                    return false;
+                }
                 if (pertanyaan.trim() === "" || opsi1.trim() === "" || opsi2.trim() === "" || opsi3.trim() === "" || opsi4.trim() === "" || opsi5.trim() === "" || jawabanBenar.trim() === "" || kategori === "Pilih Kategori" || level === "Pilih Level") {
-                    showAlert("Gagal menambahkan soal. Harap lengkapi semua kolom.");
+                    Swal.fire({
+                        text: "Harap lengkapi kategori dan level soal.",
+                        icon: "error"
+                    });
                     return false;
                 }
                 return true;

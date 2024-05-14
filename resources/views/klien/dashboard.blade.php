@@ -120,7 +120,7 @@
             </div>
             @endunless
             <div class="mt-5">
-                <a href="/klien" class="text-red-700 hover:text-red-800 mt-10">
+                <a href="/" class="text-red-700 hover:text-red-800 mt-10">
                     <span class="text-xl">&larr;</span> Keluar
                 </a>
             </div>

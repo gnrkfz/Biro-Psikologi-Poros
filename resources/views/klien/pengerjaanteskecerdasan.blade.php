@@ -76,10 +76,11 @@
                 </div>
                 <!-- Tombol Submit -->
                 <div class="flex justify-end flex-grow">
-                    <button id="submitButton" class="w-1/5 text-center bg-blue-700 text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 px-4 py-2 rounded mx-5">Selesai</button>
+                    <a onclick="submitConfirmation()" class="cursor-pointer w-1/5 text-center bg-blue-700 text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 px-4 py-2 rounded mx-5">Selesai</a>
                 </div>
             </form>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 for (let index = 1; index <= {{ count($soal) }}; index++) {
@@ -134,7 +135,7 @@
                         nomor.classList.remove('bg-gray-200');
                     }
                 }
-            }
+            };
             function clearOption(index) {
                 var radioButtons = document.getElementsByName('jawaban-' + index);
                 radioButtons.forEach(function(radio) {
@@ -146,25 +147,31 @@
                     nomor.classList.add('bg-gray-200');
                 }
                 localStorage.removeItem('jawaban-' + index);
-            }
+            };
             function scrollToSoal(index) {
                 var element = document.getElementById('soal-' + index);
                 if (element) {
                     element.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
-            }
+            };
+            function submitConfirmation() {
+                Swal.fire({
+                    text: 'Apakah anda yakin ingin menyelesaikan tes?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#1d4ed8',
+                    cancelButtonColor: '#b91c1c',
+                    confirmButtonText: 'Ya, Selesai'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById('testForm').submit();
+                        localStorage.clear();
+                    }
+                });
+            };
             function clearLocalStorage() {
                 localStorage.clear();
-            }
-            function submitConfirmation(event) {
-                event.preventDefault();
-                var confirmSubmit = confirm("Apakah anda yakin ingin menyelesaikan tes?");
-                if (confirmSubmit) {
-                    document.getElementById('testForm').submit();
-                    localStorage.clear();
-                }
-            }
-            document.getElementById("submitButton").addEventListener("click", submitConfirmation);
+            };
             history.pushState(null, null, location.href);
             window.onpopstate = function () {
                 history.go(1);

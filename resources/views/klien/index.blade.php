@@ -10,7 +10,9 @@
     <body class="bg-gray-100">
         <div class="container mx-auto flex items-center justify-center h-screen">
             <div class="bg-white p-12 shadow-lg rounded-lg text-center">
-                <img src="/img/logoporos.png" alt="logoporos" class="mx-auto mb-8 max-w-full h-auto">
+                <a href="javascript:history.back()">
+                    <img src="/img/logoporos.png" alt="logoporos" class="mx-auto mb-8 max-w-full h-auto">
+                </a>
                 <h1 class="text-3xl font-bold mb-8">Masuk Klien</h1>
                 <form method="POST" action="{{ route('klien.loginklien') }}" class="mx-auto">
                     @csrf

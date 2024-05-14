@@ -22,5 +22,12 @@
                 </div>
             </div>
         </div>
+        <script>
+            localStorage.clear();
+            history.pushState(null, null, location.href);
+            window.onpopstate = function () {
+                history.go(1);
+            };
+        </script>
     </body>
 </html>

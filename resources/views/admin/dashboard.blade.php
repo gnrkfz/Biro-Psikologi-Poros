@@ -60,6 +60,22 @@
             });
         </script>
         @endif
+        @if(session('tambahtessuccess'))
+        <script>
+            Swal.fire({
+                title: "{{ session('tambahtessuccess') }}",
+                icon: "success"
+            });
+        </script>
+        @endif
+        @if(session('tambahtesfailed'))
+        <script>
+            Swal.fire({
+                title: "{{ session('tambahtesfailed') }}",
+                icon: "error"
+            });
+        </script>
+        @endif
 
         <!-- CONTENT -->
         <div class="bg-white my-10 mx-10 px-20 py-10 shadow-lg rounded-lg">
@@ -91,10 +107,10 @@
                     </label>
                     <!-- MODAL TAMBAH TES KECERDASAN -->
                     <input type="checkbox" id="teskecerdasan" class="peer fixed appearance-none opacity-0">
-                        <label for="teskecerdasan" class="pointer-events-none invisible fixed inset-0 flex cursor-pointer items-center justify-center overflow-hidden overscroll-contain bg-black/50 opacity-0 transition-all duration-200 ease-in-out peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100 peer-checked:[&>*]:translate-y-0 peer-checked:[&>*]:scale-100 ">
+                        <label for="teskecerdasan" class="pointer-events-none invisible fixed inset-0 flex cursor-pointer items-center justify-center overflow-hidden overscroll-contain bg-black/50 opacity-0 transition-all duration-200 ease-in-out peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100 peer-checked:[&>*]:translate-y-0 peer-checked:[&>*]:scale-100">
                             <label for="" class="max-h-[calc(100vh)-5em] h-fit w-full max-w-lg scale-90 overflow-y-auto overscroll-contain rounded bg-white px-10 pt-5 pb-10 text-black shadow-lg transition">
                                 <div class="flex">
-                                    <a href="/admin/dashboard" class="text-black ml-auto">
+                                    <a onclick="uncheckModalKecerdasan(event)" class="cursor-pointer text-black ml-auto">
                                         <span class="text-xl">×</span>
                                     </a>
                                 </div>
@@ -120,7 +136,7 @@
                         <label for="teskecermatan" class="pointer-events-none invisible fixed inset-0 flex cursor-pointer items-center justify-center overflow-hidden overscroll-contain bg-black/50 opacity-0 transition-all duration-200 ease-in-out peer-checked:pointer-events-auto peer-checked:visible peer-checked:opacity-100 peer-checked:[&>*]:translate-y-0 peer-checked:[&>*]:scale-100 ">
                             <label for="" class="max-h-[calc(100vh)-5em] h-fit w-full max-w-lg scale-90 overflow-y-auto overscroll-contain rounded bg-white px-10 pt-5 pb-10 text-black shadow-lg transition">
                                 <div class="flex">
-                                    <a href="/admin/dashboard" class="text-black ml-auto">
+                                    <a onclick="uncheckModalKecermatan(event)" class="cursor-pointer text-black ml-auto">
                                         <span class="text-xl">×</span>
                                     </a>
                                 </div>
@@ -182,7 +198,7 @@
                     if (result.isConfirmed) {
                         Swal.fire({
                             title: "Deleted!",
-                            text: "Test has been deleted.",
+                            text: "Test berhasil dihapus.",
                             icon: "success",
                             showConfirmButton: false,
                         });
@@ -211,6 +227,20 @@
                             tr[i].style.display = "none";
                         }
                     }
+                }
+            }
+            function uncheckModalKecerdasan(event) {
+                event.preventDefault();
+                var teskecerdasanInput = document.getElementById('teskecerdasan');
+                if (teskecerdasanInput) {
+                    teskecerdasanInput.checked = false;
+                }
+            }
+            function uncheckModalKecermatan(event) {
+                event.preventDefault();
+                var teskecermatanInput = document.getElementById('teskecermatan');
+                if (teskecermatanInput) {
+                    teskecermatanInput.checked = false;
                 }
             }
         </script>
