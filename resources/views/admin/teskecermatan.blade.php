@@ -44,6 +44,14 @@
                 });
             };
         </script>
+        @if(session('karerror'))
+        <script>
+            Swal.fire({
+                text: "{{ session('karerror') }}",
+                icon: "error"
+            });
+        </script>
+        @endif
 
         <!-- CONTENT -->
         <div class="bg-white mt-10 mx-10 px-20 py-10 shadow-lg rounded-lg">

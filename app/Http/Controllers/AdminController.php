@@ -234,8 +234,11 @@ class AdminController extends Controller
         $teskecermatan->kar3 = $request->input('kar3');
         $teskecermatan->kar4 = $request->input('kar4');
         $teskecermatan->kar5 = $request->input('kar5');
-        $teskecermatan->save();
         $kars = [$teskecermatan->kar1, $teskecermatan->kar2, $teskecermatan->kar3, $teskecermatan->kar4, $teskecermatan->kar5];
+        if (count($kars) !== count(array_unique($kars))) {
+            return redirect()->route('teskecermatan', ['id' => $request->input('idtest')])->with('karerror', 'Karakter 1 sampai 5 harus berbeda. Silakan coba lagi.');
+        }
+        $teskecermatan->save();
         for ($i = 1; $i <= 50; $i++) {
             shuffle($kars);
             $SubSoalTesKecermatan = new SubSoalTesKecermatan;

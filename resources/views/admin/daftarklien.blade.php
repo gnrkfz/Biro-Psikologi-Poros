@@ -54,7 +54,7 @@
         @endif
 
         <!-- CONTENT -->
-        <div class="bg-white mt-10 mx-10 px-20 py-10 shadow-lg rounded-lg text-center">
+        <div class="bg-white my-10 mx-10 px-20 py-10 shadow-lg rounded-lg text-center">
             <h1 class="text-2xl font-semibold mb-10">Daftar Klien</h1>
             <div class="flex justify-between mb-5">
                 <div class="flex w-full">

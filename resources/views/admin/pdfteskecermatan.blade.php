@@ -49,7 +49,7 @@
                 @endforeach
             </tbody>
         </table>
-        <h2 style="font-weight: bold; font-size: 1rem; margin-top: 3rem;">NILAI AKHIR &nbsp;&nbsp;: {{ $jawabanteskecermatan->where('idformtes', $formtes->id)->sum('benar') }}</h2>
+        <h2 style="font-weight: bold; font-size: 1rem; margin-top: 3rem;">NILAI AKHIR &nbsp;&nbsp;: {{ $jawabanteskecermatan->where('idformtes', $formtes->id)->sum('benar') }} / 500</h2>
         <h2 style="font-weight: bold; font-size: 1rem;">KESIMPULAN &nbsp;:</h2>
     </body>
 </html>
