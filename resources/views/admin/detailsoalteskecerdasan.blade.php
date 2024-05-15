@@ -130,9 +130,8 @@
             </form>
             <form action="{{ route('deletesoalkecerdasan', ['id' => $soal->id]) }}" method="POST" class="flex justify-center mt-1">
                 @csrf
-                @method('DELETE')
                 <div class="flex justify-end flex-grow">
-                <button type="submit" class="mt-8 rounded text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 py-2 px-4">Delete Soal</button>
+                    <button type="submit" class="mt-8 rounded text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 py-2 px-4">Delete Soal</button>
                 </div>
             </form>
         </div>
