@@ -246,7 +246,7 @@
             };
             function deleteFormTesConfirmation(tesId) {
                 Swal.fire({
-                    text: 'Apakah anda yakin ingin menghapus test termasuk soal di dalamnya secara permanen?',
+                    text: 'Apakah anda yakin ingin menghapus form tes?',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#1d4ed8',

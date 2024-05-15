@@ -330,8 +330,108 @@ class AdminController extends Controller
     public function formtes($id)
     {
         $klien = Klien::findOrFail($id);
+        $validTests = collect();
         $tests = Test::all();
-        return view('admin.formtes', ['klien' => $klien, 'tests' => $tests]);
+        foreach ($tests as $test) {
+            if ($test->jenis == 'Tes Kecerdasan') {
+                $count = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->count();
+                $countAritmatika = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Aritmatika')
+                    ->count();
+                $countAritmatikaLevel1 = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Aritmatika')
+                    ->where('level', 1)
+                    ->count();
+                $countAritmatikaLevel2 = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Aritmatika')
+                    ->where('level', 2)
+                    ->count();
+                $countAritmatikaLevel3 = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Aritmatika')
+                    ->where('level', 3)
+                    ->count();
+                $countLogis = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Logis')
+                    ->count();
+                $countLogisLevel1 = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Logis')
+                    ->where('level', 1)
+                    ->count();
+                $countLogisLevel2 = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Logis')
+                    ->where('level', 2)
+                    ->count();
+                $countLogisLevel3 = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Logis')
+                    ->where('level', 3)
+                    ->count();
+                $countNonVerbal = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Non Verbal')
+                    ->count();
+                $countNonVerbalLevel1 = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Non Verbal')
+                    ->where('level', 1)
+                    ->count();
+                $countNonVerbalLevel2 = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Non Verbal')
+                    ->where('level', 2)
+                    ->count();
+                $countNonVerbalLevel3 = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Non Verbal')
+                    ->where('level', 3)
+                    ->count();
+                $countVerbal = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Verbal')
+                    ->count();
+                $countVerbalLevel1 = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Verbal')
+                    ->where('level', 1)
+                    ->count();
+                $countVerbalLevel2 = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Verbal')
+                    ->where('level', 2)
+                    ->count();
+                $countVerbalLevel3 = DB::table('teskecerdasan')
+                    ->where('idtest', $test->id)
+                    ->where('kategori', 'Verbal')
+                    ->where('level', 3)
+                    ->count();
+                if (
+                    $count >= 100 &&
+                    $countAritmatika >= 25 && $countAritmatikaLevel1 >= 12 && $countAritmatikaLevel2 >= 7 && $countAritmatikaLevel3 >= 6 &&
+                    $countLogis >= 25 && $countLogisLevel1 >= 12 && $countLogisLevel2 >= 7 && $countLogisLevel3 >= 6 &&
+                    $countNonVerbal >= 25 && $countNonVerbalLevel1 >= 12 && $countNonVerbalLevel2 >= 7 && $countNonVerbalLevel3 >= 6 &&
+                    $countVerbal >= 25 && $countVerbalLevel1 >= 12 && $countVerbalLevel2 >= 7 && $countVerbalLevel3 >= 6
+                ) {
+                    $validTests->push($test);
+                }
+            } elseif ($test->jenis == 'Tes Kecermatan') {
+                $count = DB::table('teskecermatan')
+                            ->where('idtest', $test->id)
+                            ->count();
+                if ($count >= 10) {
+                    $validTests->push($test);
+                }
+            }
+        }
+        return view('admin.formtes', ['klien' => $klien, 'tests' => $validTests]);
     }
 
     public function tambahformtes(Request $request)

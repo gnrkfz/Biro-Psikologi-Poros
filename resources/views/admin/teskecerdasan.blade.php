@@ -291,7 +291,7 @@
                 }
                 if (pertanyaan.trim() === "" || opsi1.trim() === "" || opsi2.trim() === "" || opsi3.trim() === "" || opsi4.trim() === "" || opsi5.trim() === "" || jawabanBenar.trim() === "" || kategori === "Pilih Kategori" || level === "Pilih Level") {
                     Swal.fire({
-                        text: "Harap lengkapi kategori dan level soal.",
+                        text: "Harap lengkapi seluruh form.",
                         icon: "error"
                     });
                     return false;
